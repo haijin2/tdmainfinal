@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Sound1Arcade.mp3-4fe107b450d2bc038921e6a0d490b8c9.mp3str"
+
+[deps]
+
+source_file="res://Audio/Sound1Arcade.mp3"
+dest_files=[ "res://.import/Sound1Arcade.mp3-4fe107b450d2bc038921e6a0d490b8c9.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

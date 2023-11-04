@@ -1,0 +1,178 @@
+[gd_scene load_steps=22 format=2]
+
+[ext_resource path="res://Scenes/BuildingPlatform.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/World.gd" type="Script" id=2]
+[ext_resource path="res://Assets/towerbutton_pressed.png" type="Texture" id=3]
+[ext_resource path="res://Assets/towerButton.png" type="Texture" id=4]
+[ext_resource path="res://Assets/towerButton_hover.png" type="Texture" id=5]
+[ext_resource path="res://Assets/road1.png" type="Texture" id=6]
+[ext_resource path="res://Assets/road2.png" type="Texture" id=7]
+[ext_resource path="res://Assets/road3.png" type="Texture" id=8]
+[ext_resource path="res://Assets/road4.png" type="Texture" id=9]
+[ext_resource path="res://Assets/PlaymegamesReguler-2OOee.ttf" type="DynamicFontData" id=10]
+[ext_resource path="res://Audio/Sound2Ambience.mp3" type="AudioStream" id=11]
+[ext_resource path="res://Audio/lose_audio.mp3" type="AudioStream" id=12]
+[ext_resource path="res://Audio/win_audio.mp3" type="AudioStream" id=13]
+[ext_resource path="res://Assets/bg_space.png" type="Texture" id=14]
+[ext_resource path="res://Scenes/Pause.gd" type="Script" id=15]
+[ext_resource path="res://Audio/dead.mp3" type="AudioStream" id=16]
+[ext_resource path="res://Scenes/MainMenu.gd" type="Script" id=17]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="Curve2D" id=2]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 260.837, 43.2429, 0, 0, 0, 0, 83.3478, 43.2429, 0, 0, 0, 0, 82.1464, 155.113 )
+}
+
+[sub_resource type="DynamicFont" id=3]
+size = 200
+font_data = ExtResource( 10 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 18
+outline_color = Color( 0, 0, 0, 0 )
+font_data = ExtResource( 10 )
+
+[node name="World" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_right = 256.0
+margin_bottom = 150.0
+texture = ExtResource( 14 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+modulate = Color( 1, 1, 1, 0.211765 )
+position = Vector2( 166.005, 89.9808 )
+scale = Vector2( 1.1226, 1.1226 )
+frames = SubResource( 1 )
+speed_scale = 2.0
+playing = true
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource( 2 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2( 82.1464, 155.113 )
+rotation = 1.58153
+offset = 287.62
+loop = false
+
+[node name="WaveTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="MobTimer" type="Timer" parent="."]
+wait_time = 0.1
+
+[node name="GUI" type="CanvasLayer" parent="."]
+pause_mode = 2
+
+[node name="CashLabel" type="Label" parent="GUI"]
+anchor_left = -0.00219232
+anchor_top = 0.00374156
+anchor_right = -0.00219226
+anchor_bottom = 0.00374156
+margin_left = 156.597
+margin_top = 8.43877
+margin_right = 1109.6
+margin_bottom = 177.439
+rect_scale = Vector2( 0.1, 0.1 )
+custom_fonts/font = SubResource( 3 )
+text = "Cash: 25"
+align = 2
+
+[node name="HpLabel" type="Label" parent="GUI"]
+margin_left = 81.0
+margin_top = 10.0
+margin_right = 141.0
+margin_bottom = 27.0
+custom_fonts/font = SubResource( 4 )
+text = "HP: 100"
+
+[node name="TextureButton" type="TextureButton" parent="GUI"]
+margin_left = 213.193
+margin_top = 103.945
+margin_right = 245.193
+margin_bottom = 140.945
+texture_normal = ExtResource( 4 )
+texture_pressed = ExtResource( 3 )
+texture_hover = ExtResource( 5 )
+expand = true
+
+[node name="Pause" type="Control" parent="GUI"]
+visible = false
+margin_right = 256.0
+margin_bottom = 150.0
+script = ExtResource( 15 )
+
+[node name="ColorRect" type="ColorRect" parent="GUI/Pause"]
+margin_right = 256.0
+margin_bottom = 150.0
+color = Color( 0.0352941, 0.0313726, 0.0313726, 0.623529 )
+
+[node name="CenterContainer" type="CenterContainer" parent="GUI/Pause/ColorRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI/Pause/ColorRect"]
+margin_left = 96.0
+margin_top = 53.0
+margin_right = 159.0
+margin_bottom = 97.0
+
+[node name="MainMenu" type="Button" parent="GUI/Pause/ColorRect/VBoxContainer"]
+margin_right = 63.0
+margin_bottom = 20.0
+text = "Quit"
+script = ExtResource( 17 )
+
+[node name="Label" type="Label" parent="GUI/Pause/ColorRect"]
+margin_left = 103.0
+margin_top = 28.0
+margin_right = 154.0
+margin_bottom = 42.0
+text = "PAUSED"
+
+[node name="BuildingPlatform" parent="." instance=ExtResource( 1 )]
+position = Vector2( 220.468, 76.2802 )
+
+[node name="BuildingPlatform2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 119.349, 77.1535 )
+
+[node name="BuildingPlatform3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 165.559, 79.6791 )
+
+[node name="BuildingPlatform4" parent="." instance=ExtResource( 1 )]
+position = Vector2( 41.8322, 119.481 )
+
+[node name="BuildingPlatform5" parent="." instance=ExtResource( 1 )]
+position = Vector2( 40.2754, 71.2425 )
+
+[node name="BuildingPlatform7" parent="." instance=ExtResource( 1 )]
+position = Vector2( 41.8679, 25.7316 )
+
+[node name="bg_music" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 11 )
+autoplay = true
+
+[node name="win_audio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 13 )
+
+[node name="lose_audio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 12 )
+
+[node name="dead" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 16 )
+
+[connection signal="timeout" from="WaveTimer" to="." method="_on_WaveTimer_timeout"]
+[connection signal="timeout" from="MobTimer" to="." method="_on_MobTimer_timeout"]
+[connection signal="pressed" from="GUI/TextureButton" to="." method="_on_TextureButton_pressed"]
+[connection signal="pressed" from="GUI/Pause/ColorRect/VBoxContainer/MainMenu" to="GUI/Pause/ColorRect/VBoxContainer/MainMenu" method="_on_MainMenu_pressed"]
